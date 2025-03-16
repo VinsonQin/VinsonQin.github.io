@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .hidden-header {
+            transform: translateY(-100%);
+            opacity: 0;
+        }
+        .btn {
+        border: none;
+        outline: none;
+        background-color: transparent;
+        }
+        @font-face {
+        font-family: "阿里妈妈东方大楷";
+        font-weight: 400;
+        src: url("./GnOpORIGIcWy/p3AdaFGnuvBX.woff2") format("woff2"),
+        url("./GnOpORIGIcWy/p3AdaFGnuvBX.woff") format("woff");
+        font-display: swap;
+        }
+        .headerA {
+            font-size: 30px;
+            font-family: '阿里妈妈东方大楷';
+            color: rgb(145,101,88);
+        }
+        .headerB {
+            font-size: 50px;
+            font-weight: 300;
+            font-family: '阿里妈妈东方大楷';
+            color: rgb(207, 179, 140);
+            writing-mode: vertical-lr;
+            text-orientation: upright;
+        }
+        #ip {
+            position: fixed;
+            bottom: 50px;
+            right: 100px;
+            height: 200px;
+            cursor: grab;
+        }
+
+    </style>
+</head>
+<body style="margin: 0;padding: 0;background-color: rgb(255, 255, 255);">
+    <header id="header" style="border: 1px solid black;background-color: rgb(255, 255, 255);position: fixed;width: 100%;transition: transform 0.5s ease, opacity 0.5s ease;">
+        <div style="margin-left: 100px;margin-right: 100px;margin-top: 10px;margin-bottom: 10px;display: flex;align-items: center;">
+            <img src="./img/logo1.png" height="80px">
+            <img src="./img/logo2.png" height="80px">
+            <span style="position: absolute;right: 100px;">
+                <button class="btn headerA" onclick="window.location.href='./index.html'">参小茸生态</button>
+                <button class="btn headerA" onclick="window.location.href='./team.html'">团队介绍</button>
+                <button class="btn headerA" onclick="window.location.href='./contactUs.html'">加入我们</button>
+            </span>
+        </div>
+    </header>
+    <!-- 占位内容 -->
+    <!-- <div style="height: 80px;">
+    </div> -->
+
+    <div>
+        <img src="./img/headerImg.png" style="width: 100%;">
+        <h1 class="headerB" style="position: relative;top: -500px;right: -1300px;">惠手澄心<br>&nbsp天人合一</h1>
+    </div>
+
+    <div>
+        <h1>测试</h1>
+        <h1>测试</h1><h1>测试</h1><h1>测试</h1><h1>测试</h1><h1>测试</h1><h1>测试</h1><h1>测试</h1><h1>测试</h1><h1>测试</h1><h1>测试</h1><h1>测试</h1><h1>测试</h1><h1>测试</h1><h1>测试</h1><h1>测试</h1><h1>测试</h1><h1>测试</h1><h1>测试</h1><h1>测试</h1><h1>测试</h1><h1>测试</h1><h1>测试</h1><h1>测试</h1><h1>测试</h1><h1>测试</h1><h1>测试</h1><h1>测试</h1><h1>测试</h1><h1>测试</h1><h1>测试</h1><h1>测试</h1><h1>测试</h1><h1>测试</h1><h1>测试</h1><h1>测试</h1><h1>测试</h1><h1>测试</h1><h1>测试</h1>
+    </div>
+    <!-- IP卡通形象 -->
+    <img id="ip" src="./img/ip1.png">
+
+
+
+
+    <script>
+        // 导航栏自动隐藏
+        let lastScrollTop = 0; // 记录上次滚动位置
+        const header = document.getElementById("header");
+
+        window.addEventListener("scroll", function () {
+            let scrollTop = window.scrollY || document.documentElement.scrollTop;
+
+            if (scrollTop > lastScrollTop) {
+                // 向下滚动，隐藏 header
+                header.classList.add("hidden-header");
+            } else {
+                // 向上滚动，显示 header
+                header.classList.remove("hidden-header");
+            }
+
+            lastScrollTop = scrollTop; // 更新滚动位置
+        });
+
+        // 卡通形象拖拽及切换
+        const img = document.getElementById("ip");
+
+        let isDragging = false;
+        let offsetX, offsetY;
+        let startX, startY; // 记录鼠标按下时的位置
+
+        // 图片路径
+        const originalSrc = "./img/ip1.png"; // 初始图片
+        const newSrc = "./img/ip2.png"; // 替换后的图片
+        let currentImage = originalSrc; // 记录当前图片路径
+
+        // 禁止默认拖拽行为
+        img.addEventListener("dragstart", (event) => {
+            event.preventDefault();
+        });
+
+        // 鼠标按下
+        img.addEventListener("mousedown", function (event) {
+            isDragging = true;
+            offsetX = event.clientX - img.offsetLeft;
+            offsetY = event.clientY - img.offsetTop;
+            startX = event.clientX; // 记录鼠标按下时的X坐标
+            startY = event.clientY; // 记录鼠标按下时的Y坐标
+            img.style.cursor = "grabbing";
+
+            // 防止鼠标拖动时选中文字
+            document.body.style.userSelect = "none";
+        });
+
+        // 鼠标移动
+        document.addEventListener("mousemove", function (event) {
+            if (isDragging) {
+                let x = event.clientX - offsetX;
+                let y = event.clientY - offsetY;
+
+                // 限制图片不能拖出窗口
+                x = Math.max(0, Math.min(window.innerWidth - img.clientWidth, x));
+                y = Math.max(0, Math.min(window.innerHeight - img.clientHeight, y));
+
+                img.style.left = x + "px";
+                img.style.top = y + "px";
+            }
+        });
+
+        // 鼠标松开
+        document.addEventListener("mouseup", function (event) {
+            if (isDragging) {
+                isDragging = false;
+                img.style.cursor = "grab";
+                document.body.style.userSelect = ""; // 恢复文本选择功能
+
+                // 判断是否为点击事件（而不是拖拽）
+                let deltaX = Math.abs(event.clientX - startX);
+                let deltaY = Math.abs(event.clientY - startY);
+                
+                if (deltaX < 5 && deltaY < 5) { // 认为是点击，而不是拖拽
+                    let confirmChange = confirm("要更换小助手吗？");
+                    if (confirmChange) {
+                        // 切换图片
+                        if (currentImage === originalSrc) {
+                            img.src = newSrc;
+                            currentImage = newSrc;
+                        } else {
+                            img.src = originalSrc;
+                            currentImage = originalSrc;
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
